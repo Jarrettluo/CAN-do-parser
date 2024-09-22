@@ -3,10 +3,11 @@
 
 name: Maven Package
 
+# Trigger the create release workflow
 on:
-  release:
-    types: [created]
-
+  push:
+    tags:
+      - 'v*'
 jobs:
   build:
 
