@@ -17,8 +17,8 @@
 
     <distributionManagement>
         <repository>
-            <id>can-frame-parser</id>
-            <name>CAN frame parser</name>
+            <id>github</id>
+            <name>CANFrameParser</name>
             <url>https://maven.pkg.github.com/Jarrettluo/CANFrameParser</url>
             <snapshots>
                   <enabled>true</enabled>
