@@ -20,6 +20,9 @@
             <id>can-frame-parser</id>
             <name>CAN frame parser</name>
             <url>https://maven.pkg.github.com/Jarrettluo/CANFrameParser</url>
+            <snapshots>
+                  <enabled>true</enabled>
+            </snapshots>
         </repository>
     </distributionManagement>
 
