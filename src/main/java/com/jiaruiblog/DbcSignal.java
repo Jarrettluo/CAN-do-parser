@@ -122,4 +122,21 @@ public class DbcSignal {
     public void setUnitConversion(String unitConversion) {
         this.comment = unitConversion;
     }
+
+    @Override
+    public String toString() {
+        return "DbcSignal{" +
+                "name='" + name + '\'' +
+                ", startBit=" + startBit +
+                ", length=" + length +
+                ", littleEndian='" + littleEndian + '\'' +
+                ", sign='" + sign + '\'' +
+                ", factor='" + factor + '\'' +
+                ", offset='" + offset + '\'' +
+                ", minimum='" + minimum + '\'' +
+                ", maximum='" + maximum + '\'' +
+                ", unit='" + unit + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

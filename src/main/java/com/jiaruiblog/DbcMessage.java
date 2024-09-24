@@ -72,4 +72,17 @@ public class DbcMessage {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    @Override
+    public String toString() {
+        return "DbcMessage{" +
+                "name='" + name + '\'' +
+                ", idFormat='" + idFormat + '\'' +
+                ", dlc=" + dlc +
+                ", txMethod='" + txMethod + '\'' +
+                ", cycleTime='" + cycleTime + '\'' +
+                ", transmitter='" + transmitter + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }
