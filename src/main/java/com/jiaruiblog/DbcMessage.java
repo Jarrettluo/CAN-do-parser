@@ -1,5 +1,7 @@
 package com.jiaruiblog;
 
+import java.util.List;
+
 public class DbcMessage {
 
     private String name;
@@ -15,6 +17,8 @@ public class DbcMessage {
     private String transmitter;
 
     private String comment;
+
+    private List<DbcSignal> dbcSignalList;
 
 
     public String getName() {
@@ -71,6 +75,14 @@ public class DbcMessage {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public void setDbcSignalList(List<DbcSignal> dbcSignalList) {
+        this.dbcSignalList = dbcSignalList;
+    }
+
+    public List<DbcSignal> getDbcSignalList() {
+        return dbcSignalList;
     }
 
     @Override
