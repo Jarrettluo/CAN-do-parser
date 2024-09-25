@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CanFrameParser {
+public class CANFrameParser {
 
     private final Map<String, DbcMessage> dbcMessageMap;
 
-    public CanFrameParser(Map<String, DbcMessage> dbcMessageMap) {
+    public CANFrameParser(Map<String, DbcMessage> dbcMessageMap) {
         this.dbcMessageMap = dbcMessageMap;
     }
 

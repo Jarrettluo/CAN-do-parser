@@ -6,6 +6,10 @@ import java.io.File;
 
 public class FileUtil {
 
+    private FileUtil() {
+        throw new IllegalArgumentException("Utility class");
+    }
+
     public static String getEncoding(String fileName) {
         if (fileName == null || fileName.isEmpty()) {
             throw new RuntimeException("file is null or empty");

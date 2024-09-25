@@ -4,6 +4,10 @@ import java.util.BitSet;
 
 public class ByteUtils {
 
+    private ByteUtils() {
+        throw new IllegalArgumentException("Utility class");
+    }
+
     /**
      * 从十六进制字符串转换为字节数组
      *
@@ -49,7 +53,7 @@ public class ByteUtils {
     }
 
     /*
-    二进制转byte
+     * 二进制转byte
      */
     public static byte bit2byte(String bString) {
         byte result = 0;
