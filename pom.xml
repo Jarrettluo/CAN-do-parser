@@ -35,13 +35,18 @@
 
     <distributionManagement>
         <repository>
+            <id>ossrh</id>
+            <name>Central Repository OSSRH</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
             <id>github</id>
             <name>can-frame-parser</name>
             <url>https://maven.pkg.github.com/Jarrettluo/can-frame-parser</url>
             <snapshots>
                   <enabled>true</enabled>
             </snapshots>
-        </repository>
+        </snapshotRepository>
     </distributionManagement>
 
 </project>
