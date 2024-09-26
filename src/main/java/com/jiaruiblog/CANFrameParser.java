@@ -13,6 +13,9 @@ public class CANFrameParser {
     private final Map<String, DbcMessage> dbcMessageMap;
 
     public CANFrameParser(Map<String, DbcMessage> dbcMessageMap) {
+        if (Objects.isNull(dbcMessageMap) || dbcMessageMap.isEmpty()) {
+            throw new IllegalArgumentException("dbcMessageMap is empty");
+        }
         this.dbcMessageMap = dbcMessageMap;
     }
 
@@ -22,6 +25,9 @@ public class CANFrameParser {
     public Map<String, Double> extractMessage(CANFrame canFrame) {
         String hexMsgId = canFrame.getHexMsgId();
         DbcMessage dbcMessage = dbcMessageMap.get(hexMsgId);
+        if (Objects.isNull(dbcMessage)) {
+            return Collections.emptyMap();
+        }
         List<DbcSignal> dbcSignalList = dbcMessage.getDbcSignalList();
         Map<String, Double> result = new HashMap<>();
         for (DbcSignal dbcSignal : dbcSignalList) {
@@ -54,8 +60,8 @@ public class CANFrameParser {
     public static double extractSignal(byte[] data, int startBit, int length,
                                        boolean isSigned, boolean isLittleEndian,
                                        String factor, String offset) {
-        if (Objects.isNull(data) || data.length != length) {
-            throw new IllegalArgumentException("data.length != length");
+        if (Objects.isNull(data) || data.length == 0) {
+            throw new IllegalArgumentException("data is null");
         }
         // 1. 根据字节序调整起始位和字节顺序
         if (isLittleEndian) {
@@ -66,7 +72,7 @@ public class CANFrameParser {
         BitSet bitSet = ByteUtils.byteArray2BitSet(data);
         BitSet newBitSet = new BitSet(length);
         // 计算出一共有多少位数据
-        int bitLength = BIT_LENGTH * length;
+        int bitLength = BIT_LENGTH * data.length;
 
         // 3. 如果是小端数据，那么则将数据进行重新换算
         if (isLittleEndian) {
