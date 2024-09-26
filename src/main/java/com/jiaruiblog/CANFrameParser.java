@@ -151,35 +151,33 @@ public class CANFrameParser {
     // 32位
     private static double parse32BitIeee754(BitSet bits) {
         // 提取符号位、指数位和尾数位
-        int sign = bits.get(0) ? -1 : 1; // 符号位
+        int sign = bits.get(0) ? -1 : 1;
 
+        // 32位指数为8位长度
         int exponent = 0;
-        // 解析1 - 9
         for (int i = 1; i < 9; i++) {
             exponent = (exponent << 1) | (bits.get(i) ? 1 : 0);
         }
 
-        float mantissa = 0;
+        // 计算尾数，长度为23位
+        double mantissa = 0;
         for (int i = 9; i < 32; i++) {
             if (bits.get(i)) {
-                mantissa += (float) Math.pow(2, -(i - 8));
+                mantissa += 1.0 / (1 << (i - 8));
             }
         }
 
-        // 计算实际值
-        double result;
-        if (exponent == 0 && mantissa != 0F) {
-            // 非规格数, 位数非全零
-            result = ((sign) * (mantissa) * Math.pow(2, -126));
-        } else if (exponent == 0 && mantissa == 0F) {
-            result = 0.0f; // 处理零
-        } else if (exponent == 0xFF) {
-            result = (mantissa == 0) ? (sign == 1 ? Float.POSITIVE_INFINITY : Float.NEGATIVE_INFINITY) : Float.NaN; // 处理无穷大或NaN
-        } else {
-            exponent -= 127; // 调整指数
-            result = ((sign) * (1 + mantissa) * Math.pow(2, exponent));
+        // 计算非规格化的值
+        if (exponent == 0) {
+            return mantissa == 0 ? 0.0 : sign * mantissa * Math.pow(2, -126);
         }
-        return result;
+        // 计算特殊化的值
+        if (exponent == 0xFF) {
+            return mantissa == 0 ? (sign == 1 ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY) : Double.NaN;
+        }
+
+        exponent -= 127;
+        return sign * (1 + mantissa) * Math.pow(2, exponent);
     }
 
     // 64位
