@@ -96,8 +96,8 @@
 主要目标是对字节数据根据DBC文件的信息解析为物理量。
 
 主要的功能是：
-- 解析DBC文件。
-- 解析byte[]为十进制数据。
+- 解析`DBC`文件。
+- 解析字节数组`byte[]`为十进制数据。
 
 <p align="right">(<a href="#readme-top">返回</a>)</p>
 
@@ -118,41 +118,46 @@
 ### 解析dbc文件
 
 ```java
-    String filePath = "xxx.dbc";
-    // 对dbc文件进行解析
-    Map<DbcMessage, List<DbcSignal>> dbcMessageListMap = DbcParser.parseFile(filePath);
+
+String filePath = "xxx.dbc";
+
+// 对dbc文件进行解析
+Map<DbcMessage, List<DbcSignal>> dbcMessageListMap = DbcParser.parseFile(filePath);
+
 ```
 
 ### 解析CAN帧数据
 
 #### 方法1： 通过实例化解析对象进行解析数据帧
 ```java
-        // CAN 帧数据
-        CANFrame canFrame = new CANFrame(System.currentTimeMillis(), 1, 8, 20, "275d602702000000");
+// CAN 帧数据
+CANFrame canFrame = new CANFrame(System.currentTimeMillis(), 1, 8, 20, "275d602702000000");
 
-        // dbc数据; 通过dbc解析器得到
-        Map<String, DbcMessage> dbcMessageMap = new HashMap<String, DbcMessage>();
+// dbc数据; 通过dbc解析器得到
+Map<String, DbcMessage> dbcMessageMap = new HashMap<String, DbcMessage>();
 
-        // 初始化解析器
-        CANFrameParser canFrameParser = new CANFrameParser(dbcMessageMap);
-        // 对can数据进行解析
-        Map<String, Double> physicalValueMap = canFrameParser.extractMessage(canFrame);
+// 初始化解析器
+CANFrameParser canFrameParser = new CANFrameParser(dbcMessageMap);
+
+// 对can数据进行解析
+Map<String, Double> physicalValueMap = canFrameParser.extractMessage(canFrame);
+
 ```
 
 ### 方法2： 通过解析工具静态方法进行解析某一条信号
 ```java
-        CANFrame canFrame = new CANFrame(System.currentTimeMillis(), 1, 8, 20, "275d602702000000");
+CANFrame canFrame = new CANFrame(System.currentTimeMillis(), 1, 8, 20, "275d602702000000");
 
-        // 解析具体的信号
-        int startBit = 32;
-        int length = 32;
-        boolean isSigned = true;
-        boolean isLittleEndian = true;
-        String factor = "1";
-        String offset = "0";
+// 解析具体的信号
+int startBit = 32;
+int length = 32;
+boolean isSigned = true;
+boolean isLittleEndian = true;
+String factor = "1";
+String offset = "0";
 
-        // 解析工具的静态解析方法，对信号进行解析
-        double signal = CANFrameParser.extractSignal(canFrame.getMsgData(), startBit, length, isSigned, 
+// 解析工具的静态解析方法，对信号进行解析
+double signal = CANFrameParser.extractSignal(canFrame.getMsgData(), startBit, length, isSigned, 
                 isLittleEndian, factor, offset);
 
 ```
