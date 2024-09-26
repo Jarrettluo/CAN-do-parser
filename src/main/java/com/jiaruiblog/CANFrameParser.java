@@ -1,13 +1,14 @@
 package com.jiaruiblog;
 
 import com.jiaruiblog.utils.ByteUtils;
+import com.jiaruiblog.utils.StringUtils;
 
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 
 public class CANFrameParser {
+
+    private static final int BIT_LENGTH = 8;
 
     private final Map<String, DbcMessage> dbcMessageMap;
 
@@ -51,8 +52,11 @@ public class CANFrameParser {
      * @return 提取到的信号值
      */
     public static double extractSignal(byte[] data, int startBit, int length,
-                                     boolean isSigned, boolean isLittleEndian,
-                                     String factor, String offset) {
+                                       boolean isSigned, boolean isLittleEndian,
+                                       String factor, String offset) {
+        if (Objects.isNull(data) || data.length != length) {
+            throw new IllegalArgumentException("data.length != length");
+        }
         // 1. 根据字节序调整起始位和字节顺序
         if (isLittleEndian) {
             // 小端处理，需要重新计算起始位在小端下的位置
@@ -61,10 +65,12 @@ public class CANFrameParser {
         // 2.将byte数组转换为BitSet数据类型
         BitSet bitSet = ByteUtils.byteArray2BitSet(data);
         BitSet newBitSet = new BitSet(length);
+        // 计算出一共有多少位数据
+        int bitLength = BIT_LENGTH * length;
 
-        // 开始进行转数据
+        // 3. 如果是小端数据，那么则将数据进行重新换算
         if (isLittleEndian) {
-            for (int i = 64 - startBit - length; i < 64 - startBit; i++) {
+            for (int i = bitLength - startBit - length; i < bitLength - startBit; i++) {
                 if (bitSet.get(i)) {
                     newBitSet.set(i);
                 }
@@ -76,20 +82,43 @@ public class CANFrameParser {
                 }
             }
         }
-
-        double secondData = bitSet2Integer(newBitSet, length);
+        // 从二进制转换后的十进制数据
+        double doubleValue = bitSet2Integer(newBitSet, length);
         if (isSigned) {
             // 有符号的计算方式
             boolean integer = isInteger(factor);
             if (integer) {
                 // factor是整数则按照ieee754进行解析
-                secondData = bitSetToFloat(newBitSet, length);
+                if (length == 32 || length == 64) {
+                    doubleValue = parseIEEE754(newBitSet, length);
+                } else {
+                    // 计算有符号的二进制数据
+                    if (bitSet.get(0)) {
+                        doubleValue = signBinaryValue(newBitSet, length);
+                    }
+                }
             } else {
-                secondData = Integer.parseUnsignedInt(ByteUtils.byteSet2String(newBitSet, length), 2);
+                doubleValue = Integer.parseUnsignedInt(ByteUtils.byteSet2String(newBitSet, length), 2);
             }
         }
 
-        return secondData;
+        // 5. 将十进制数据转换为物理量
+        return calcPhysicalValue(doubleValue, factor, offset);
+    }
+
+    /*
+     * 计算有符号的二进制数据
+     */
+    private static double signBinaryValue(BitSet newBitSet, int length) {
+        double doubleValue;
+        BitSet bitSet1 = new BitSet();
+        for (int i = 0; i < length; i++) {
+            if (!newBitSet.get(i)) {
+                bitSet1.set(i);
+            }
+        }
+        doubleValue = -(Long.parseLong(ByteUtils.byteSet2String(bitSet1, length), 2) + 1);
+        return doubleValue;
     }
 
     /*
@@ -100,18 +129,27 @@ public class CANFrameParser {
         int value = 0;
         for (int i = 0; i < length; i++) {
             if (bits.get(i)) {
-                value |= (1 << (length - 1 - i)); // 从高位到低位设置值
+                // 从高位到低位设置值
+                value |= (1 << (length - 1 - i));
             }
         }
         return value;
     }
 
-    // 32位
-    public static float bitSetToFloat(BitSet bits, int length) {
-        if (length < 32) {
-            throw new IllegalArgumentException("BitSet must contain at least 32 bits.");
+    // 解析32位或者64位的数据
+    private static double parseIEEE754(BitSet bits, int length) {
+        if (length == 32) {
+            return parse32BitIeee754(bits);
+        } else if (length == 64) {
+            return parse64BitIeee754(bits);
+        } else {
+            throw new IllegalArgumentException("BitSet must contain at least 64 bits.");
         }
 
+    }
+
+    // 32位
+    private static double parse32BitIeee754(BitSet bits) {
         // 提取符号位、指数位和尾数位
         int sign = bits.get(0) ? -1 : 1; // 符号位
 
@@ -122,54 +160,57 @@ public class CANFrameParser {
         }
 
         float mantissa = 0;
-        for (int i = 9; i < length; i++) {
+        for (int i = 9; i < 32; i++) {
             if (bits.get(i)) {
-                mantissa += (float) Math.pow(2, -(i - 9 + 1));
+                mantissa += (float) Math.pow(2, -(i - 8));
             }
         }
 
         // 计算实际值
-        float result;
-        if (exponent == 0 && mantissa != 0) {
-            // 非规格数, 非全零
-            result = (float) ((sign) * (mantissa) * Math.pow(2, -126));
+        double result;
+        if (exponent == 0 && mantissa != 0F) {
+            // 非规格数, 位数非全零
+            result = ((sign) * (mantissa) * Math.pow(2, -126));
         } else if (exponent == 0 && mantissa == 0F) {
             result = 0.0f; // 处理零
         } else if (exponent == 0xFF) {
             result = (mantissa == 0) ? (sign == 1 ? Float.POSITIVE_INFINITY : Float.NEGATIVE_INFINITY) : Float.NaN; // 处理无穷大或NaN
         } else {
             exponent -= 127; // 调整指数
-            result = (float) ((sign) * (1 + mantissa) * Math.pow(2, exponent));
+            result = ((sign) * (1 + mantissa) * Math.pow(2, exponent));
         }
         return result;
     }
 
     // 64位
-    public static double bitSetToDouble(BitSet bits) {
-        if (bits.length() < 64) {
-            throw new IllegalArgumentException("BitSet must contain at least 64 bits.");
-        }
-
+    public static double parse64BitIeee754(BitSet bits) {
         // 提取符号位、指数位和尾数位
-        int sign = bits.get(63) ? 1 : 0; // 符号位
+        int sign = bits.get(0) ? 1 : 0; // 符号位
         long exponent = 0;
-        for (int i = 62; i >= 52; i--) {
+        for (int i = 1; i < 12; i++) {
             exponent = (exponent << 1) | (bits.get(i) ? 1 : 0);
         }
+
         long mantissa = 0;
-        for (int i = 51; i >= 0; i--) {
-            mantissa = (mantissa << 1) | (bits.get(i) ? 1 : 0);
+        for (int i = 12; i < 64; i++) {
+            if (bits.get(i)) {
+                mantissa |= (1L << (63 - i));
+            }
         }
 
         // 计算实际值
         double result;
-        if (exponent == 0 && mantissa == 0) {
-            result = 0.0; // 处理零
+        if (exponent == 0 && mantissa != 0) {
+            result = (sign == 0 ? 1 : -1) * (mantissa) * Math.pow(2, -1022);
+        } else if (exponent == 0 && mantissa == 0) {
+            // 处理零
+            result = 0.0;
         } else if (exponent == 0x7FF) {
-            result = (mantissa == 0) ? (sign == 0 ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY) : Double.NaN; // 处理无穷大或NaN
+            // 处理无穷大或NaN
+            result = (mantissa == 0) ? (sign == 0 ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY) : Double.NaN;
         } else {
             exponent -= 1023; // 调整指数
-            result = (double) ((sign == 0 ? 1 : -1) * (1 + (mantissa / (double) (1L << 52))) * Math.pow(2, exponent));
+            result = ((sign == 0 ? 1 : -1) * (1 + mantissa) * Math.pow(2, exponent));
         }
         return result;
     }
@@ -202,6 +243,24 @@ public class CANFrameParser {
             return Float.parseFloat(input) == (float) Float.valueOf(input).intValue();
         } catch (NumberFormatException e) {
             return false;
+        }
+    }
+
+    /*
+     * 计算总线数据的物理值
+     */
+    public static double calcPhysicalValue(double originValue, String factor, String offset) {
+        // 避免空指针
+        if (StringUtils.isEmpty(factor) || StringUtils.isEmpty(offset)) {
+            throw new IllegalArgumentException("factor or offset is empty");
+        }
+        try {
+            BigDecimal originData = new BigDecimal(String.valueOf(originValue));
+            BigDecimal factorData = new BigDecimal(factor);
+            BigDecimal offsetData = new BigDecimal(offset);
+            return originData.multiply(factorData).add(offsetData).doubleValue();
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("calculate physical value failed");
         }
     }
 
