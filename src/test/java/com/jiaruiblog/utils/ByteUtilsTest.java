@@ -3,9 +3,16 @@ package com.jiaruiblog.utils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.nio.ByteOrder;
 import java.util.BitSet;
 
-
+/**
+ * @ClassName ByteUtilsTest
+ * @Description ByteUtils测试类
+ * @Author Jarrett Luo
+ * @Date 2024/9/27 13:41
+ * @Version 1.0
+ */
 public class ByteUtilsTest {
 
     @Test
@@ -16,6 +23,9 @@ public class ByteUtilsTest {
         expectBitSet.set(6);
         expectBitSet.set(7);
         BitSet bitSet = ByteUtils.byteArray2BitSet(new byte[]{0b00100111});
+
+        ByteOrder byteOrder = ByteOrder.nativeOrder();
+
         Assert.assertEquals(expectBitSet, bitSet);
     }
 

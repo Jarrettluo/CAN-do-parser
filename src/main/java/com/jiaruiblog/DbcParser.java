@@ -11,6 +11,13 @@ import java.util.regex.Pattern;
 
 import static com.jiaruiblog.utils.FileUtil.getEncoding;
 
+/**
+ * @ClassName DbcParser
+ * @Description DBC解析工具
+ * @Author Jarrett Luo
+ * @Date 2024/9/27 13:41
+ * @Version 1.0
+ */
 public class DbcParser {
 
     static final List<Object> SIGNAL_LIST = new ArrayList<>();
@@ -28,13 +35,13 @@ public class DbcParser {
     // dbc的属性定义部分
     public static final Pattern BA_PATTERN = Pattern.compile("^BA_ \"SystemSignalLongSymbol\" SG_ (.*?) (.*?) \"(.*?)\"", Pattern.DOTALL);
 
-
     /**
+     * @author Jarrett Luo
+     * @desc 解读dbc文件
+     * @createTime  2024/9/27 15:31
      * @param filePath 传递的文件信息
-     * @return Map集合
-     * @throws IOException 文件异常
-     * @description 解读dbc文件
-     */
+     * @return java.util.Map<com.jiaruiblog.DbcMessage,java.util.List<com.jiaruiblog.DbcSignal>>
+     **/
     public static Map<DbcMessage, List<DbcSignal>> parseFile(String filePath) throws IOException {
         if (StringUtils.isEmpty(filePath)) {
             throw new IOException("文件不存在");

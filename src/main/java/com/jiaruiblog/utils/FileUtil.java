@@ -4,6 +4,13 @@ import info.monitorenter.cpdetector.io.*;
 
 import java.io.File;
 
+/**
+ * @ClassName FileUtil
+ * @Description 文件处理工具
+ * @Author Jarrett Luo
+ * @Date 2024/9/27 13:41
+ * @Version 1.0
+ */
 public class FileUtil {
 
     private FileUtil() {
