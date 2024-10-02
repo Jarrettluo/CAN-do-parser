@@ -7,11 +7,10 @@ import java.math.BigDecimal;
 import java.util.*;
 
 /**
- * @ClassName CANFrameParser
- * @Description CAN总线数据帧解析工具
- * @Author Jarrett Luo
- * @Date 2024/9/27 13:41
- * @Version 1.0
+ * CAN总线数据帧解析工具
+ *
+ * @author Jarrett Luo
+ * @version 1.0
  */
 public class CANFrameParser {
 
@@ -27,11 +26,10 @@ public class CANFrameParser {
     }
 
     /**
+     * <p>提取帧数据</p>
+     * @param canFrame canFrame
+     * @return <code>java.util.Map&lt; java.lang.String,java.lang.Double&gt;</code>
      * @author Jarrett Luo
-     * @desc 提取帧数据
-     * @createTime  2024/9/27 15:19
-     * @param canFrame
-     * @return java.util.Map<java.lang.String,java.lang.Double>
      **/
     public Map<String, Double> extractMessage(CANFrame canFrame) {
         String hexMsgId = canFrame.getHexMsgId();
@@ -49,12 +47,11 @@ public class CANFrameParser {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 提取一帧信号数据
-     * @createTime  2024/9/27 15:19
+     * <p>提取一帧信号数据</p>
      * @param data 数据帧
      * @param dbcSignal dbc的信号
      * @return double
+     * @author Jarrett Luo
      **/
     public static double extractSignal(byte[] data, DbcSignal dbcSignal) {
         return extractSignal(data, dbcSignal.getStartBit(), dbcSignal.getLength(),
@@ -62,17 +59,18 @@ public class CANFrameParser {
                 dbcSignal.getFactor(), dbcSignal.getOffset());
     }
 
-
     /**
-     * 从 CAN 数据中提取信号值
-     *
+     * <p>从 CAN 数据中提取信号值</p>
      * @param data           CAN 数据字节数组
      * @param startBit       信号在数据中的起始位（DBC 中定义）
      * @param length         信号的位长度（DBC 中定义）
      * @param isSigned       是否为有符号信号
      * @param isLittleEndian 是否为小端字节序
-     * @return 提取到的信号值
-     */
+     * @param factor         物理量换算的系数
+     * @param offset         物理量换算的偏移量
+     * @return double
+     * @author Jarrett Luo
+     **/
     public static double extractSignal(byte[] data, int startBit, int length,
                                        boolean isSigned, boolean isLittleEndian,
                                        String factor, String offset) {
@@ -129,12 +127,11 @@ public class CANFrameParser {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 计算有符号的二进制数据
-     * @createTime  2024/9/27 15:26
+     * <p>计算有符号的二进制数据</p>
      * @param newBitSet 从完整的信号变量中提取的bit
      * @param length 长度
      * @return double
+     * @author Jarrett Luo
      **/
     private static double signBinaryValue(BitSet newBitSet, int length) {
         double doubleValue;
@@ -149,12 +146,11 @@ public class CANFrameParser {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc bit数组转换为整数
-     * @createTime  2024/9/27 15:26
+     * <p>bit数组转换为整数</p>
      * @param bits bit数据
      * @param length bit数据长度
      * @return double
+     * @author Jarrett Luo
      **/
     private static double bitSet2Integer(BitSet bits, Integer length) {
         // 将8位BitSet转换为整数
@@ -169,12 +165,11 @@ public class CANFrameParser {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 解析32位或者64位的数据
-     * @createTime  2024/9/27 15:27
+     * <p>解析32位或者64位的数据</p>
      * @param bits bit数据
      * @param length bit数据长度
      * @return double
+     * @author Jarrett Luo
      **/
     private static double parseIEEE754(BitSet bits, int length) {
         if (length == 32) {
@@ -188,11 +183,10 @@ public class CANFrameParser {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 解析32位的bit数据，通过IEEE754方法进行解析
-     * @createTime  2024/9/27 15:27
+     * <p>解析32位的bit数据，通过IEEE754方法进行解析</p>
      * @param bits bit数据
      * @return double
+     * @author Jarrett Luo
      **/
     private static double parse32BitIeee754(BitSet bits) {
         // 提取符号位、指数位和尾数位
@@ -226,11 +220,10 @@ public class CANFrameParser {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 64位数据长度
-     * @createTime  2024/9/27 15:28
+     * <p>64位数据长度</p>
      * @param bits bit数据
      * @return double
+     * @author Jarrett Luo
      **/
     public static double parse64BitIeee754(BitSet bits) {
         // 提取符号位、指数位和尾数位
@@ -283,14 +276,13 @@ public class CANFrameParser {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 判断字符串是不是数字，且是整数
-     * 用于对整数的字符串进行判断
-     * 例如 1.0 等于 1
-     * 例如 0.001 不等于 0
-     * @createTime  2024/9/27 15:28
+     * <p>判断字符串是不是数字，且是整数<br>
+     * 用于对整数的字符串进行判断<br>
+     * 例如 1.0 等于 1<br>
+     * 例如 0.001 不等于 0</p>
      * @param input 输入的字符串
      * @return boolean
+     * @author Jarrett Luo
      **/
     private static boolean isInteger(String input) {
         try {
@@ -301,13 +293,12 @@ public class CANFrameParser {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 计算总线数据的物理值
-     * @createTime  2024/9/27 15:29
+     * <p>计算总线数据的物理值</p>
      * @param originValue 二进制转出来的原始的十进制数据
      * @param factor dbc中信号的系数
      * @param offset dbc信号的偏移量
      * @return double
+     * @author Jarrett Luo
      **/
     public static double calcPhysicalValue(double originValue, String factor, String offset) {
         // 避免空指针

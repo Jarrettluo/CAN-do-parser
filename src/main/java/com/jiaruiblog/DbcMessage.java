@@ -3,11 +3,10 @@ package com.jiaruiblog;
 import java.util.List;
 
 /**
- * @ClassName DbcMessage
- * @Description DBC数据帧
- * @Author Jarrett Luo
- * @Date 2024/9/27 13:41
- * @Version 1.0
+ * DBC数据帧
+ *
+ * @author Jarrett Luo
+ * @version 1.0
  */
 public class DbcMessage {
 

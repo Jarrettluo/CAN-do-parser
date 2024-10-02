@@ -5,11 +5,10 @@ import com.jiaruiblog.utils.ByteUtils;
 import java.util.StringJoiner;
 
 /**
- * @ClassName CANFrame
- * @Description CAN数据帧
- * @Author Jarrett Luo
- * @Date 2024/9/27 13:41
- * @Version 1.0
+ * CAN数据帧
+ *
+ * @author Jarrett Luo
+ * @version 1.0
  */
 public class CANFrame {
 
@@ -86,12 +85,10 @@ public class CANFrame {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc    // 将msgID格式化为16进制字符串
-     *          // 保持8位长度，不足的补0
-     * @createTime  2024/9/27 15:25
+     * <p>将msgID格式化为16进制字符串<br>保持8位长度，不足的补0</p>
      *
      * @return java.lang.String
+     * @author Jarrett Luo
      **/
     public String getHexMsgId() {
         return String.format("%08x", msgId);
@@ -110,11 +107,10 @@ public class CANFrame {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 获取字节数组的16进制编码形式
-     * @createTime  2024/9/27 15:25
+     * <p>获取字节数组的16进制编码形式</p>
      *
      * @return java.lang.String
+     * @author Jarrett Luo
      **/
     public String getMsgDataHexString() {
         StringJoiner stringJoiner = new StringJoiner(" ");
@@ -125,11 +121,10 @@ public class CANFrame {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 获取字节数组的二进制
-     * @createTime  2024/9/27 15:24
+     * <p>获取字节数组的二进制</p>
      *
      * @return java.lang.String
+     * @author Jarrett Luo
      **/
     public String getMsgDataBinaryString() {
         StringJoiner stringJoiner = new StringJoiner(" ");

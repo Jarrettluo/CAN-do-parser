@@ -11,6 +11,12 @@ import java.io.File;
  * @Date 2024/9/27 13:41
  * @Version 1.0
  */
+/**
+ * 集合处理工具
+ *
+ * @author Jarrett Luo
+ * @version 1.0
+ */
 public class FileUtil {
 
     private FileUtil() {

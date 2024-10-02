@@ -1,11 +1,10 @@
 package com.jiaruiblog;
 
 /**
- * @ClassName DbcSignal
- * @Description DBC文件信号类
- * @Author Jarrett Luo
- * @Date 2024/9/27 13:41
- * @Version 1.0
+ * DBC文件信号类
+ *
+ * @author Jarrett Luo
+ * @version 1.0
  */
 public class DbcSignal {
 

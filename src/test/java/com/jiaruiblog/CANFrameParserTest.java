@@ -11,11 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ClassName CANFrameParserTest
- * @Description CANFrameParser测试类
- * @Author Jarrett Luo
- * @Date 2024/9/27 13:41
- * @Version 1.0
+ * CANFrameParser测试类
+ *
+ * @author Jarrett Luo
+ * @version 1.0
  */
 public class CANFrameParserTest {
 

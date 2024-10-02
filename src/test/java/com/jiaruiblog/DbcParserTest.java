@@ -7,11 +7,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @ClassName DbcParserTest
- * @Description DbcParser测试类
- * @Author Jarrett Luo
- * @Date 2024/9/27 13:41
- * @Version 1.0
+ * DbcParser测试类
+ *
+ * @author Jarrett Luo
+ * @version 1.0
  */
 public class DbcParserTest {
 

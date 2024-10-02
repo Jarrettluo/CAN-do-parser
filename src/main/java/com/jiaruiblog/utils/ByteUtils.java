@@ -3,11 +3,10 @@ package com.jiaruiblog.utils;
 import java.util.BitSet;
 
 /**
- * @ClassName ByteUtils
- * @Description 用于对byte类型进行处理的工具类
- * @Author Jarrett Luo
- * @Date 2024/9/27 13:41
- * @Version 1.0
+ * 用于对byte类型进行处理的工具类
+ *
+ * @author Jarrett Luo
+ * @version 1.0
  */
 public class ByteUtils {
 
@@ -16,11 +15,10 @@ public class ByteUtils {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 从十六进制字符串转换为字节数组
-     * @createTime  2024/9/27 15:22
-     * @param hexString 转换后的字节数组
+     * <p>从十六进制字符串转换为字节数组</p>
+     * @param hexString 转换前十六进制字符串
      * @return byte[] 转换后的字节数组
+     * @author Jarrett Luo
      **/
     public static byte[] hexStringToByteArray(String hexString) {
         int len = hexString.length();
@@ -33,14 +31,13 @@ public class ByteUtils {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 把byte转化成2进制字符串
+     * <p>把byte转化成2进制字符串</p>
      *          1byte = 8bit
-     *          << 左移 二进制位左移若干位，高位丢弃，低位补0
-     *          >> 右移 右移若干位，高位补0或补符号位，右边丢弃
-     * @createTime  2024/9/27 15:22
+     *          <p>&lt; &lt; 左移 二进制位左移若干位，高位丢弃，低位补0</p>
+     *          <p>&gt; &gt; 右移 右移若干位，高位补0或补符号位，右边丢弃</p>
      * @param b byte
      * @return java.lang.String
+     * @author Jarrett Luo
      **/
     public static String getBinaryStrFromByte(byte b) {
         StringBuilder result = new StringBuilder();
@@ -62,11 +59,10 @@ public class ByteUtils {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 二进制转byte
-     * @createTime  2024/9/27 15:23
+     * <p>二进制转byte</p>
      * @param bString 二进制的字符串
      * @return byte
+     * @author Jarrett Luo
      **/
     public static byte bit2byte(String bString) {
         byte result = 0;
@@ -77,11 +73,11 @@ public class ByteUtils {
     }
 
     /**
-     * @author Jarrett Luo
-     * @desc 将ByteArray对象转化为BitSet
-     * @createTime  2024/9/27 15:24
-     * @param bytes byte arrays
+     * <p>将ByteArray对象转化为BitSet</p>
+     * @param bytes 2024/9/27 15:24
+     *      * @param bytes byte arrays
      * @return java.util.BitSet
+     * @author Jarrett Luo
      **/
     public static BitSet byteArray2BitSet(byte[] bytes) {
         BitSet bitSet = new BitSet(bytes.length * 8);
