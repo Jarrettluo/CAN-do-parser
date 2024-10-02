@@ -88,7 +88,6 @@ public class CANFrame {
      * <p>将msgID格式化为16进制字符串<br>保持8位长度，不足的补0</p>
      *
      * @return java.lang.String
-     * @author Jarrett Luo
      **/
     public String getHexMsgId() {
         return String.format("%08x", msgId);
@@ -110,7 +109,6 @@ public class CANFrame {
      * <p>获取字节数组的16进制编码形式</p>
      *
      * @return java.lang.String
-     * @author Jarrett Luo
      **/
     public String getMsgDataHexString() {
         StringJoiner stringJoiner = new StringJoiner(" ");
@@ -124,7 +122,6 @@ public class CANFrame {
      * <p>获取字节数组的二进制</p>
      *
      * @return java.lang.String
-     * @author Jarrett Luo
      **/
     public String getMsgDataBinaryString() {
         StringJoiner stringJoiner = new StringJoiner(" ");
