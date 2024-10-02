@@ -89,6 +89,12 @@ public class ByteUtils {
         return bitSet;
     }
 
+    /**
+     * <p>bitSet的数据转化为0和1组成的字符串</p>
+     * @param bitSet bitSet数据结构
+     * @param len 期望的长度
+     * @return java.lang.String
+     **/
     public static String byteSet2String(BitSet bitSet, int len) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < len; i++) {

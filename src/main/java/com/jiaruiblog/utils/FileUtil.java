@@ -5,13 +5,6 @@ import info.monitorenter.cpdetector.io.*;
 import java.io.File;
 
 /**
- * @ClassName FileUtil
- * @Description 文件处理工具
- * @Author Jarrett Luo
- * @Date 2024/9/27 13:41
- * @Version 1.0
- */
-/**
  * 集合处理工具
  *
  * @author Jarrett Luo
@@ -23,6 +16,11 @@ public class FileUtil {
         throw new IllegalArgumentException("Utility class");
     }
 
+    /**
+     * <p>查询文件的编码格式<br>采用第三方的判断</p>
+     * @param fileName 判断编码格式的文件路径
+     * @return java.lang.String 返回文件的编码，例如gbk，ut-8等
+     **/
     public static String getEncoding(String fileName) {
         if (fileName == null || fileName.isEmpty()) {
             throw new RuntimeException("file is null or empty");
@@ -44,7 +42,6 @@ public class FileUtil {
             charset = detector.detectCodepage(file.toURI().toURL());
             return charset.name();
         } catch (Exception ex) {
-            ex.printStackTrace();
             return null;
         }
     }
