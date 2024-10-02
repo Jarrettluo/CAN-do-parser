@@ -6,6 +6,12 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * DbcParser测试类
+ *
+ * @author Jarrett Luo
+ * @version 1.0
+ */
 public class DbcParserTest {
 
     // 测试传入一个空路径的文件

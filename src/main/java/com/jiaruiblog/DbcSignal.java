@@ -1,5 +1,11 @@
 package com.jiaruiblog;
 
+/**
+ * DBC文件信号类
+ *
+ * @author Jarrett Luo
+ * @version 1.0
+ */
 public class DbcSignal {
 
     // 信号名称

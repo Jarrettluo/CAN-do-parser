@@ -43,3 +43,14 @@ https://blog.csdn.net/qq_35057766/article/details/135580884#:~:text=CAN%20%E6%98
 
 
 偏向于科普内容：
+
+-- 
+打包到maven中央仓库的教程：
+https://blog.csdn.net/csdnerM/article/details/136784455#:~:text=%E5%A6%82%E4%BD%95%E5%8F%91%E5%B8%83jar%E5%8C%85
+
+
+使用
+luojiarui和 luojiarui2@hirain.com
+生成密钥对：
+补充进行maven的设置：https://blog.csdn.net/Hubz131/article/details/131181747
+

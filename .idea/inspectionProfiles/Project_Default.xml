@@ -4,5 +4,8 @@
     <inspection_tool class="CatchMayIgnoreException" enabled="true" level="WARNING" enabled_by_default="true">
       <scope name="Tests" level="WARNING" enabled="false" />
     </inspection_tool>
+    <inspection_tool class="JavadocDeclaration" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ADDITIONAL_TAGS" value="EnumName,Description,Author,Date,Version,ClassName,createTime,desc" />
+    </inspection_tool>
   </profile>
 </component>

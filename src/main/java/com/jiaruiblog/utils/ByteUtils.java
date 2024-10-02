@@ -2,6 +2,12 @@ package com.jiaruiblog.utils;
 
 import java.util.BitSet;
 
+/**
+ * 用于对byte类型进行处理的工具类
+ *
+ * @author Jarrett Luo
+ * @version 1.0
+ */
 public class ByteUtils {
 
     private ByteUtils() {
@@ -9,11 +15,11 @@ public class ByteUtils {
     }
 
     /**
-     * 从十六进制字符串转换为字节数组
-     *
-     * @param hexString 输入的十六进制字符串
-     * @return 转换后的字节数组
-     */
+     * <p>从十六进制字符串转换为字节数组</p>
+     * @param hexString 转换前十六进制字符串
+     * @return byte[] 转换后的字节数组
+     * @author Jarrett Luo
+     **/
     public static byte[] hexStringToByteArray(String hexString) {
         int len = hexString.length();
         byte[] data = new byte[len / 2];
@@ -25,14 +31,14 @@ public class ByteUtils {
     }
 
     /**
-     * 把byte转化成2进制字符串
-     * 1byte = 8bit
-     * << 左移 二进制位左移若干位，高位丢弃，低位补0
-     * >> 右移 右移若干位，高位补0或补符号位，右边丢弃
-     *
+     * <p>把byte转化成2进制字符串</p>
+     *          1byte = 8bit
+     *          <p>&lt; &lt; 左移 二进制位左移若干位，高位丢弃，低位补0</p>
+     *          <p>&gt; &gt; 右移 右移若干位，高位补0或补符号位，右边丢弃</p>
      * @param b byte
-     * @return String
-     */
+     * @return java.lang.String
+     * @author Jarrett Luo
+     **/
     public static String getBinaryStrFromByte(byte b) {
         StringBuilder result = new StringBuilder();
         byte a = b;
@@ -52,9 +58,12 @@ public class ByteUtils {
         return result.toString();
     }
 
-    /*
-     * 二进制转byte
-     */
+    /**
+     * <p>二进制转byte</p>
+     * @param bString 二进制的字符串
+     * @return byte
+     * @author Jarrett Luo
+     **/
     public static byte bit2byte(String bString) {
         byte result = 0;
         for (int i = bString.length() - 1, j = 0; i >= 0; i--, j++) {
@@ -64,11 +73,12 @@ public class ByteUtils {
     }
 
     /**
-     * 将ByteArray对象转化为BitSet
-     *
-     * @param bytes byte arrays
-     * @return
-     */
+     * <p>将ByteArray对象转化为BitSet</p>
+     * @param bytes 2024/9/27 15:24
+     *      * @param bytes byte arrays
+     * @return java.util.BitSet
+     * @author Jarrett Luo
+     **/
     public static BitSet byteArray2BitSet(byte[] bytes) {
         BitSet bitSet = new BitSet(bytes.length * 8);
         int index = 0;

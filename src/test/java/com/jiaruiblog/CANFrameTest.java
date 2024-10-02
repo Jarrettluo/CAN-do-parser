@@ -4,7 +4,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
+/**
+ * CANFrame测试类
+ *
+ * @author Jarrett Luo
+ * @version 1.0
+ */
 public class CANFrameTest {
 
     @Before

@@ -10,6 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * CANFrameParser测试类
+ *
+ * @author Jarrett Luo
+ * @version 1.0
+ */
 public class CANFrameParserTest {
 
     @Rule

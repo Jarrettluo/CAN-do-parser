@@ -2,6 +2,12 @@ package com.jiaruiblog;
 
 import java.util.List;
 
+/**
+ * DBC数据帧
+ *
+ * @author Jarrett Luo
+ * @version 1.0
+ */
 public class DbcMessage {
 
     private String name;

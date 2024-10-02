@@ -109,9 +109,9 @@
 
 ```xml
 <dependency>
-  <groupId>com.jiaruiblog</groupId>
+  <groupId>io.github.jarrettluo</groupId>
   <artifactId>can-frame-parser</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 

@@ -4,6 +4,12 @@ import com.jiaruiblog.utils.ByteUtils;
 
 import java.util.StringJoiner;
 
+/**
+ * CAN数据帧
+ *
+ * @author Jarrett Luo
+ * @version 1.0
+ */
 public class CANFrame {
 
     // CAN帧数据的时间戳；时间精度为us
@@ -78,8 +84,12 @@ public class CANFrame {
         this.msgId = msgId;
     }
 
-    // 将msgID格式化为16进制字符串
-    // 保持8位长度，不足的补0
+    /**
+     * <p>将msgID格式化为16进制字符串<br>保持8位长度，不足的补0</p>
+     *
+     * @return java.lang.String
+     * @author Jarrett Luo
+     **/
     public String getHexMsgId() {
         return String.format("%08x", msgId);
     }
@@ -96,7 +106,12 @@ public class CANFrame {
         this.msgData = msgData;
     }
 
-    // 获取字节数组的16进制编码形式
+    /**
+     * <p>获取字节数组的16进制编码形式</p>
+     *
+     * @return java.lang.String
+     * @author Jarrett Luo
+     **/
     public String getMsgDataHexString() {
         StringJoiner stringJoiner = new StringJoiner(" ");
         for (byte msgDatum : msgData) {
@@ -105,7 +120,12 @@ public class CANFrame {
         return stringJoiner.toString();
     }
 
-    // 获取字节数组的二进制
+    /**
+     * <p>获取字节数组的二进制</p>
+     *
+     * @return java.lang.String
+     * @author Jarrett Luo
+     **/
     public String getMsgDataBinaryString() {
         StringJoiner stringJoiner = new StringJoiner(" ");
         for (byte msgDatum : msgData) {
