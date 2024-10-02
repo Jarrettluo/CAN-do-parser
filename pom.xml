@@ -122,10 +122,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>1.5</version>
-                <configuration>
-                    <executable>C:\Program Files (x86)\GnuPG\bin\gpg.exe</executable>
-                    <keyname>Jarrett Luo</keyname>
-                </configuration>
+<!--                <configuration>-->
+<!--                    <executable>C:\Program Files (x86)\GnuPG\bin\gpg.exe</executable>-->
+<!--                    <keyname>Jarrett Luo</keyname>-->
+<!--                </configuration>-->
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>

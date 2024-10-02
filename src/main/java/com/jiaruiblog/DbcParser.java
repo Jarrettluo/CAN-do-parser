@@ -38,7 +38,6 @@ public class DbcParser {
      * <p>解读dbc文件</p>
      * @param filePath 传递的文件信息
      * @return <code>java.util.Map&lt; com.jiaruiblog.DbcMessage,java.util.List&lt;com.jiaruiblog.DbcSignal&gt;&gt;</code>
-     * @author Jarrett Luo
      * @throws IOException io异常
      **/
     public static Map<DbcMessage, List<DbcSignal>> parseFile(String filePath) throws IOException {

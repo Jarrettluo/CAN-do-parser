@@ -29,7 +29,6 @@ public class CANFrameParser {
      * <p>提取帧数据</p>
      * @param canFrame canFrame
      * @return <code>java.util.Map&lt; java.lang.String,java.lang.Double&gt;</code>
-     * @author Jarrett Luo
      **/
     public Map<String, Double> extractMessage(CANFrame canFrame) {
         String hexMsgId = canFrame.getHexMsgId();
@@ -51,7 +50,6 @@ public class CANFrameParser {
      * @param data 数据帧
      * @param dbcSignal dbc的信号
      * @return double
-     * @author Jarrett Luo
      **/
     public static double extractSignal(byte[] data, DbcSignal dbcSignal) {
         return extractSignal(data, dbcSignal.getStartBit(), dbcSignal.getLength(),
@@ -69,7 +67,6 @@ public class CANFrameParser {
      * @param factor         物理量换算的系数
      * @param offset         物理量换算的偏移量
      * @return double
-     * @author Jarrett Luo
      **/
     public static double extractSignal(byte[] data, int startBit, int length,
                                        boolean isSigned, boolean isLittleEndian,
@@ -131,7 +128,6 @@ public class CANFrameParser {
      * @param newBitSet 从完整的信号变量中提取的bit
      * @param length 长度
      * @return double
-     * @author Jarrett Luo
      **/
     private static double signBinaryValue(BitSet newBitSet, int length) {
         double doubleValue;
@@ -150,7 +146,6 @@ public class CANFrameParser {
      * @param bits bit数据
      * @param length bit数据长度
      * @return double
-     * @author Jarrett Luo
      **/
     private static double bitSet2Integer(BitSet bits, Integer length) {
         // 将8位BitSet转换为整数
@@ -169,7 +164,6 @@ public class CANFrameParser {
      * @param bits bit数据
      * @param length bit数据长度
      * @return double
-     * @author Jarrett Luo
      **/
     private static double parseIEEE754(BitSet bits, int length) {
         if (length == 32) {
@@ -186,7 +180,6 @@ public class CANFrameParser {
      * <p>解析32位的bit数据，通过IEEE754方法进行解析</p>
      * @param bits bit数据
      * @return double
-     * @author Jarrett Luo
      **/
     private static double parse32BitIeee754(BitSet bits) {
         // 提取符号位、指数位和尾数位
@@ -223,7 +216,6 @@ public class CANFrameParser {
      * <p>64位数据长度</p>
      * @param bits bit数据
      * @return double
-     * @author Jarrett Luo
      **/
     public static double parse64BitIeee754(BitSet bits) {
         // 提取符号位、指数位和尾数位
@@ -282,7 +274,6 @@ public class CANFrameParser {
      * 例如 0.001 不等于 0</p>
      * @param input 输入的字符串
      * @return boolean
-     * @author Jarrett Luo
      **/
     private static boolean isInteger(String input) {
         try {
@@ -298,7 +289,6 @@ public class CANFrameParser {
      * @param factor dbc中信号的系数
      * @param offset dbc信号的偏移量
      * @return double
-     * @author Jarrett Luo
      **/
     public static double calcPhysicalValue(double originValue, String factor, String offset) {
         // 避免空指针

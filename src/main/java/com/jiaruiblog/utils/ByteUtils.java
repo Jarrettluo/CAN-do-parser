@@ -37,7 +37,6 @@ public class ByteUtils {
      *          <p>&gt; &gt; 右移 右移若干位，高位补0或补符号位，右边丢弃</p>
      * @param b byte
      * @return java.lang.String
-     * @author Jarrett Luo
      **/
     public static String getBinaryStrFromByte(byte b) {
         StringBuilder result = new StringBuilder();
